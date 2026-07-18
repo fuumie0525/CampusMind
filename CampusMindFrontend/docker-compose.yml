@@ -1,0 +1,11 @@
+services:
+  campusmind-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: campusmind-frontend
+    ports:
+      - "5174:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

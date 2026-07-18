@@ -1,0 +1,26 @@
+# Prometheus 配置文件 — CampusMind 校园多 Agent 咨询服务系统
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'campusmind'
+    environment: 'production'
+
+rule_files:
+  - "alerts/*.yml"
+
+scrape_configs:
+  # CampusMind 主应用指标
+  - job_name: 'campusmind-app'
+    static_configs:
+      - targets: ['campusmind:8000']
+        labels:
+          service: 'campusmind'
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # Prometheus 自监控
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
